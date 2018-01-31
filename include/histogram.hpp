@@ -188,14 +188,6 @@ inline std::vector<double> Histogram::Logspace(void) {
     return out;
 }
 
-//
-// Helper functions
-//
-
-void inline histogram(std::vector<double> data, double vmin, double vmax, int num_bins, const char *fname) {
-    Histogram hist = Histogram(data, vmin, vmax, num_bins, false);
-    hist.WriteToFile(fname);
-}
-
 
 #endif  // HISTOGRAM_H_
+
