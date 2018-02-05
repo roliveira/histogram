@@ -18,5 +18,5 @@ ExternalProject_Add(
 
 # Expose required variable (CATCH_INCLUDE_PATH) to parent scope
 ExternalProject_Get_Property(catch source_dir)
-set(CATCH_MODULE_PATH "${source_dir}" PARENT_SCOPE)
-set(CATCH_INCLUDES ${source_dir}/single_include PARENT_SCOPE)
+set(CATCH_MODULE_PATH "${source_dir}"               CACHE INTERNAL "${PROJECT_NAME}: Include Directories" FORCE)
+set(CATCH_INCLUDES     ${source_dir}/single_include CACHE INTERNAL "${PROJECT_NAME}: Include Directories" FORCE)
