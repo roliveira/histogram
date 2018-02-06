@@ -41,10 +41,8 @@ add_subdirectory(include)
 
 # Build the external requirements
 if(BUILD_EXTERNAL)
-add_subdirectory(external)
-include_directories(
-    ${CATCH_INCLUDES}
-)    
+    add_subdirectory(external)
+    include_directories(${CATCH_INCLUDES})    
 else()
     find_package(Catch REQUIRED)
     add_subdirectory(external EXCLUDE_FROM_ALL)
