@@ -7,3 +7,6 @@ set(TEST_FILES
 set(PROJECT_TEST_NAME ${PROJECT_NAME}_test)
 add_executable(${PROJECT_TEST_NAME} ${TEST_FILES})
 add_test(NAME ${PROJECT_TEST_NAME} COMMAND ${PROJECT_TEST_NAME} ${TEST_FILES})
+
+include(ParseAndAddCatchTests)
+ParseAndAddCatchTests(${PROJECT_TEST_NAME})  
