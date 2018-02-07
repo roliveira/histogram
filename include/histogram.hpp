@@ -14,6 +14,31 @@
 #define HISTOGRAM_VERSION_PATCH 0
 
 
+//
+// Auxiliary methods
+//
+
+inline std::vector<double> linspace(double _vmin, double _vmax, int _num) {
+    std::vector<double> out(_num);
+    double h = (_vmax - _vmin) / static_cast<double>(_num);
+
+    for (int i = 0; i < _num; ++i) 
+        out[i] = _vmin + static_cast<double>(i)*h;
+
+    return out;
+}
+
+inline std::vector<double> logspace(double _vmin, double _vmax, int _num) {
+    std::vector<double> out(_num);
+    double h = (std::log10(_vmax) - std::log10(_vmin)) / static_cast<double>(_num);
+
+    for (int i = 0; i < _num; ++i)
+        out[i] = std::pow(10, std::log10(_vmin) + static_cast<double>(i)*h);
+
+    return out;
+}
+
+
 class Histogram {
 private:
     bool   log;
@@ -219,21 +244,11 @@ inline int Histogram::FindIndex(double _value) {
 }
 
 inline std::vector<double> Histogram::Linspace(void) {
-    std::vector<double> out(bins_num);
-
-    for (int i = 0; i < bins_num; ++i) 
-        out[i] = vmin + static_cast<double>(i)*bins_width;
-
-    return out;
+    return linspace(vmin, vmax + bins_width, bins_num);
 }
 
 inline std::vector<double> Histogram::Logspace(void) {
-    std::vector<double> out(bins_num);
-
-    for (int i = 0; i < bins_num; ++i)
-        out[i] = std::pow(10, std::log10(vmin) + static_cast<double>(i)*bins_width);
-
-    return out;
+    return logspace(vmin, vmax * bins_width, bins_num);
 }
 
 //
@@ -251,6 +266,7 @@ inline void Histogram::WriteToFile(const char *fname) {
 
     ofs.close();
 }
+
 
 #endif  // HISTOGRAM_HPP_
 

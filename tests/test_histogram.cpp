@@ -1,6 +1,53 @@
 
 #include "catch.hpp"
 #include "histogram.hpp"
+#include <iostream>
+
+TEST_CASE("Auxiliary methods", "[methods]") {
+    
+    int n = 10;
+
+    SECTION("linspace") {
+        double vmin = 0.0;
+        double vmax = 1.0;
+        double h    = (vmax - vmin) / static_cast<double>(n);
+
+        std::vector<double> data = { 
+            0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9
+        };
+
+        std::vector<double> values = linspace(vmin, vmax, n);
+
+        REQUIRE( values.size() == n                );
+        REQUIRE( values[0]     == Approx(vmin)     );
+        REQUIRE( values[n - 1] == Approx(vmax - h) );
+
+        for (size_t i = 0; i < n; ++i)
+            REQUIRE( values[i] == Approx(data[i]) );
+
+    }
+
+    SECTION("logspace") {
+        double vmin = 1E-5;
+        double vmax = 1E+5;
+        double h    = std::pow(10, (std::log10(vmax) - std::log10(vmin)) / static_cast<double>(n));
+
+        std::vector<double> data = { 
+            1E-5, 1E-4, 1E-3, 1E-2, 1E-1, 1E+0, 1E+1, 1E+2, 1E+3, 1E+4
+        };
+
+        std::vector<double> values = logspace(vmin, vmax, n);
+
+        REQUIRE( values.size() == n                );
+        REQUIRE( values[0]     == Approx(vmin)     );
+        REQUIRE( values[n - 1] == Approx(vmax / h) );
+
+        for (size_t i = 0; i < n; ++i)
+            REQUIRE( values[i] == Approx(data[i]) );
+
+    }
+
+}
 
 TEST_CASE("Create histogram class", "[constructor]") {
     
