@@ -213,9 +213,9 @@ inline int Histogram::GetCounts(int _idx) {
 //
 
 inline int Histogram::FindIndex(double _value) {
-    if      (_value <  vmin) return 0;
-    else if (_value >= vmax) return bins_num-1;
-    else                     return std::lower_bound(bins.begin(), bins.end(), _value) - bins.begin();
+    if      (_value <= vmin) return 0;
+    else if (_value >  vmax) return bins_num-1;
+    else                     return std::upper_bound(bins.begin(), bins.end(), _value) - bins.begin() - 1;
 }
 
 inline std::vector<double> Histogram::Linspace(void) {
