@@ -182,7 +182,7 @@ inline void Histogram::SetLog(bool _flag) {
 }
 
 inline void Histogram::SetValues(std::vector<double> _values) {
-    for (double i : _values) counts[FindIndex(i)]++;
+    for (double i : _values) SetValue(i);
 }
 
 inline void Histogram::SetBins(std::vector<double> _bins) {
@@ -240,8 +240,8 @@ inline int Histogram::GetCounts(int _idx) {
 inline int Histogram::FindIndex(double _value) {
     if      (_value <= vmin) return 0;
     else if (_value >  vmax) return bins_num-1;
-    else                     return std::upper_bound(bins.begin(), bins.end(), _value) - bins.begin() - 1;
-}
+    else                     return std::upper_bound(bins.begin(), bins.end() - 1, _value) - bins.begin() - 1;
+} 
 
 inline std::vector<double> Histogram::Linspace(void) {
     return linspace(vmin, vmax + bins_width, bins_num);
